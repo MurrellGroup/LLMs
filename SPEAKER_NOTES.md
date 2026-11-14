@@ -334,7 +334,7 @@ OpenAI reported in 2024 that o1 improved with more reinforcement learning during
 
 While answering, the model usually extends its context without changing its parameters. Reinforcement learning changes those parameters beforehand, using the outcomes of many attempts. The next example shows how an outcome can supply that training signal.
 
-Presenter cue: Reveal one line per advance. Relate each new line to another generation step, with the previous lines available as context.
+Presenter cue: Reveal each stage of the calculation. Each line takes several token-generation steps; the preceding tokens remain available as context.
 
 Sources: [OpenAI, September 2024](https://openai.com/index/learning-to-reason-with-llms/).
 

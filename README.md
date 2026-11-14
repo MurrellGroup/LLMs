@@ -82,3 +82,7 @@ The demonstrations are scripted teaching examples; they are not live model calls
 The verification argument is a mechanistic interpretation, not a claim that human superiority is established in every unverified task or that only maths and coding can show exceptional performance. The talk distinguishes benchmark success, gold-medal-level performance, a new best-known construction, and real-world outcomes.
 
 Sources were checked on 14 November 2026. The build checks content, all SVG states, local asset references, and the 30-minute timing.
+
+## Browser review
+
+The revised presentation was checked on its deployed GitHub Pages site in Chrome: all 26 completed slide layouts, intermediate attention and layer-flow states, the moving gradient-descent point, keyboard replay, speaker notes, and synchronization with the separate presenter window. The reading view was also inspected for clipping.
