@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A 30-minute scientific introduction to large language models, with interactive explanations of learning, attention, reasoning, and verification.">
+  <meta name="color-scheme" content="light">
+  <title>Large language models</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="assets/talk.css">
+  <script src="assets/content.js" defer></script>
+  <script src="assets/diagrams.js" defer></script>
+  <script src="assets/talk.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#controls">Presentation controls</a>
+  <main id="viewport" aria-label="Presentation">
+    <div id="stage"></div>
+  </main>
+  <aside id="notes-panel" aria-label="Speaker notes" hidden>
+    <div class="notes-heading"><h2 id="notes-title">Speaker notes</h2><button id="close-notes" aria-label="Close speaker notes">×</button></div>
+    <p id="notes-time"></p><div id="notes-content"></div>
+    <p id="next-cue"></p>
+  </aside>
+  <nav id="controls" aria-label="Presentation controls" tabindex="-1">
+    <div class="navigation"><button id="previous" aria-label="Previous step" title="Previous step (Left arrow)">←</button><button id="slide-counter" title="Slide index (O)" aria-label="Open slide index">1 / 26</button><button id="next" aria-label="Next step" title="Next step (Space or Right arrow)">→</button><span id="build-status" aria-hidden="true"></span></div>
+    <div class="tools"><span id="timer" hidden>00:00</span><button id="notes-button" aria-pressed="false" title="Speaker notes (N)">Notes</button><button id="presenter-button" title="Open presenter window (P)">Presenter</button><button id="fullscreen-button" title="Fullscreen (F)" aria-label="Toggle fullscreen">⛶</button><button id="help-button" title="Help (?)" aria-label="Keyboard shortcuts and sources">?</button></div>
+  </nav>
+  <div id="announcement" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+  <dialog id="index-dialog" aria-labelledby="index-title"><div class="dialog-heading"><h2 id="index-title">Slides</h2><button data-close-dialog aria-label="Close slide index">×</button></div><ol id="slide-index"></ol></dialog>
+  <dialog id="help-dialog" aria-labelledby="help-title"><div class="dialog-heading"><h2 id="help-title">Presenting</h2><button data-close-dialog aria-label="Close help">×</button></div>
+    <dl class="shortcuts"><dt>Space / → / Page Down</dt><dd>Next animation step, then next slide</dd><dt>← / Page Up</dt><dd>Previous step</dd><dt>Shift + → / ←</dt><dd>Next / previous slide</dd><dt>Home / End</dt><dd>First / last slide</dd><dt>R</dt><dd>Replay this slide</dd><dt>N / P</dt><dd>Notes / separate presenter window</dd><dt>O / F</dt><dd>Slide index / fullscreen</dd><dt>T / Shift + T</dt><dd>Start or pause timer / reset timer</dd><dt>B / Escape</dt><dd>Blank screen / close a panel or unblank</dd></dl>
+    <p>Use the arrow buttons on a touch screen. Animations advance only when you choose. Reduced-motion preferences are respected.</p>
+    <p>Teaching examples and attention weights are illustrative. Dated research results have linked citations. No live model, account, or network request is needed to present.</p>
+    <div class="help-links"><button id="sources-button">References</button><a href="?handout=1">Reading view</a><button id="print-button">Print slides</button><a href="SPEAKER_NOTES.md">Speaker notes</a></div>
+  </dialog>
+  <dialog id="sources-dialog" aria-labelledby="sources-title"><div class="dialog-heading"><h2 id="sources-title">References</h2><button data-close-dialog aria-label="Close references">×</button></div><ol id="source-list"></ol></dialog>
+  <div id="blank-screen" hidden aria-label="Presentation blanked"></div>
+  <noscript><main class="no-script"><h1>Large language models</h1><p>This presentation uses JavaScript for its slides and animations. Enable JavaScript, or read the <a href="SPEAKER_NOTES.md">complete speaker notes</a> and <a href="SOURCES.md">sources</a>.</p></main></noscript>
+</body>
+</html>
