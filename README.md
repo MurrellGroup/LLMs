@@ -4,7 +4,7 @@ A 30-minute academic talk for scientists from varied disciplines. The presentati
 
 ## Present
 
-Once GitHub Pages is configured, the default project URL is:
+The presentation is published at:
 
 **https://murrellgroup.github.io/LLMs/**
 
@@ -37,8 +37,6 @@ Append `?handout=1` for a reading view with all reveals visible. The Print slide
 
 The workflow checks the content, exports the notes, packages the public files, and deploys the resulting artifact. It has the required `contents: read`, `pages: write`, and `id-token: write` permissions and uses the `github-pages` environment. Repository or organization deployment rules may still apply.
 
-This repository was private when the presentation was prepared. Pages availability for private repositories depends on the organization's GitHub plan. The workflow does not change repository visibility or enable Pages by itself. A first run before Pages is enabled may fail at **Configure Pages**; select the publishing source and run it again.
-
 GitHub's setup instructions: [custom Pages workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages) and [selecting the publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
 ## Talk structure
@@ -59,7 +57,9 @@ Read [SPEAKER_NOTES.md](SPEAKER_NOTES.md) for the timed script and animation cue
 ## Edit
 
 - `assets/content.js`: slide copy, speaker notes, timing, and citations.
-- `assets/diagrams.js`: seven original SVG teaching diagrams and their animation states.
+- `assets/foundation-scenes.js`: numerical prediction, squared error, gradient descent, and autoregressive generation.
+- `assets/transformer-scenes.js`: layers, attention, information flow, and KV caching.
+- `assets/diagrams.js`: shared diagram entry point.
 - `assets/talk.js`: navigation, reveal state, presenter mode, timer, reading view, and printing.
 - `assets/talk.css`: restrained academic slide layout and responsive controls.
 - `index.html`: application shell.
@@ -81,4 +81,4 @@ The demonstrations are scripted teaching examples; they are not live model calls
 
 The verification argument is a mechanistic interpretation, not a claim that human superiority is established in every unverified task or that only maths and coding can show exceptional performance. The talk distinguishes benchmark success, gold-medal-level performance, a new best-known construction, and real-world outcomes.
 
-Sources were checked on 14 November 2026. Content, SVG-state, asset, and timing checks are included. The workspace's live browser preview service was unavailable during preparation, so interactive browser QA remains to be completed when presenting or after Pages is configured.
+Sources were checked on 14 November 2026. The build checks content, all SVG states, local asset references, and the 30-minute timing.

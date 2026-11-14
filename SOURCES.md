@@ -26,7 +26,7 @@ Per-layer key/value caching during autoregressive inference. Accessed 14 Novembe
 
 Slides: 12, 13.
 
-## Brown et al., 2020
+## Brown et al., GPT-3, 2020
 
 [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)
 
@@ -98,7 +98,7 @@ Primary reference for evaluating generated functions with tests. The missing-pos
 
 Slides: 21.
 
-## International Mathematical Olympiad, 2025, Problem 4
+## IMO 2025, Problem 4 (paraphrased)
 
 [IMO 2025 problems](https://www.imo-official.org/problems/2025/)
 

@@ -4,7 +4,7 @@ import vm from 'node:vm';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const context = {window:{}};
 vm.runInNewContext(readFileSync(`${root}assets/content.js`,'utf8'), context);
-vm.runInNewContext(readFileSync(`${root}assets/diagrams.js`,'utf8'), context);
+for (const file of ['assets/foundation-scenes.js','assets/transformer-scenes.js','assets/diagrams.js']) vm.runInNewContext(readFileSync(`${root}${file}`,'utf8'), context);
 const {slides,sources} = context.window.LLMTalk;
 const diagrams = context.window.LLMDiagrams;
 const fmt = n => `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;

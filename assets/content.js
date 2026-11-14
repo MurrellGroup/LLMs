@@ -1,156 +1,385 @@
-/* Edit slide copy, timing, and speaker notes here. All demonstrations are scripted. */
+/* Slide content and timed speaker notes. Teaching examples are scripted. */
 window.LLMTalk = {
-  sources: {
-    backprop: {label:'Rumelhart, Hinton & Williams, 1986', title:'Learning representations by back-propagating errors', url:'https://www.nature.com/articles/323533a0', note:'Backpropagation computes derivatives through a network. The loss landscape in the talk is a teaching example.'},
-    transformer: {label:'Vaswani et al., 2017', title:'Attention Is All You Need', url:'https://arxiv.org/html/1706.03762v7', note:'Masked self-attention, learned query/key/value projections, residual updates, and positionwise transformations. The talk explains only the causal language-model stack.'},
-    cache: {label:'Hugging Face, Transformers documentation', title:'How caching works', url:'https://huggingface.co/docs/transformers/cache_explanation', note:'Per-layer key/value caching during autoregressive inference. Accessed 14 November 2026.'},
-    gpt3: {label:'Brown et al., 2020', title:'Language Models are Few-Shot Learners', url:'https://arxiv.org/abs/2005.14165', note:'GPT-3 demonstrated multiple tasks from examples in context, without task-specific gradient updates. The toy prompts in this talk are constructed illustrations.'},
-    llama: {label:'The Llama 3 Herd of Models, 2024', title:'The Llama 3 Herd of Models', url:'https://arxiv.org/html/2407.21783v3', note:'The flagship Llama 3.1 model was pretrained on 15.6 trillion text tokens. Training tokens are not a count of unique words.'},
-    politics: {label:'Deutscher Bundestag, historical archive', title:'27. April 1972: Das Misstrauensvotum gegen Willy Brandt', url:'https://www.bundestag.de/dokumente/textarchiv/1972-04-27-misstrauensvotum-brandt-890810', note:'The official account gives 496 voting members, 260 votes cast, 247 in favor, and 249 required. The teaching prompt is paraphrased.'},
-    fields: {label:'MIT OpenCourseWare, Algebra II, Lecture 26', title:'Finite Fields', url:'https://ocw.mit.edu/courses/res-18-012-algebra-ii-student-notes-spring-2022/mit18_702s22_lec26.pdf', note:'A finite field has prime-power order and characteristic equal to that prime. The 256-element example is a direct mathematical deduction.'},
-    instruct: {label:'Ouyang et al. / OpenAI, 2022', title:'Aligning language models to follow instructions', url:'https://openai.com/index/instruction-following/', note:'InstructGPT used demonstrations and human preference feedback. The small-model preference result is for that combined pipeline and the evaluated prompts.'},
-    o1: {label:'OpenAI, September 2024', title:'Learning to reason with LLMs', url:'https://openai.com/index/learning-to-reason-with-llms/', note:'Historical report of gains from reasoning RL and additional inference computation. The talk does not use a 64-sample consensus result as single-attempt accuracy.'},
-    r1: {label:'DeepSeek-AI, January 2025', title:'DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning', url:'https://arxiv.org/html/2501.12948v1', note:'R1-Zero AIME 2024 estimated pass@1 rose from 15.6% to 71.0% during RL. Figure 2 averages 16 responses per question; this is not best-of-16 success.'},
-    aime: {label:'MAA, AIME I 2024, Problem 1 (paraphrased)', title:'2024 AIME I problems, authorized reproduction', url:'https://live.poshenloh.com/past-contests/aime/2024I', note:'MAA-authored problem reproduced with permission. The walk-and-café question is the opening item, chosen for accessibility. Its answer is 204 minutes.'},
-    humaneval: {label:'Chen et al., 2021', title:'Evaluating Large Language Models Trained on Code', url:'https://arxiv.org/abs/2107.03374', note:'Primary reference for evaluating generated functions with tests. The missing-positive-integer exercise is an original teaching example, not a quoted HumanEval item or measured model run.'},
-    imo: {label:'International Mathematical Olympiad, 2025, Problem 4', title:'IMO 2025 problems', url:'https://www.imo-official.org/problems/2025/', note:'Paraphrased divisor-sequence problem. The displayed 18 and 12 examples are direct arithmetic illustrations.'},
-    gemini: {label:'Google DeepMind / IMO coordinators, July 2025', title:'Advanced Gemini Deep Think reaches gold-medal standard at IMO 2025', url:'https://deepmind.google/blog/advanced-version-of-gemini-with-deep-think-officially-achieves-gold-medal-standard-at-the-international-mathematical-olympiad/', note:'35/42, five of six problems, officially graded. An advanced evaluation system with additional RL, mathematical data, and parallel reasoning; not an isolated RL ablation.'},
-    imoresults: {label:'IMO, official 2025 results', title:'66th International Mathematical Olympiad results', url:'https://www.imo-official.org/editions/2025/', note:'Gold-medal-level is not better than every contestant. Five human contestants scored 42/42.'},
-    alphaevolve: {label:'Google DeepMind, May 2025', title:'AlphaEvolve: a Gemini-powered coding agent for designing advanced algorithms', url:'https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/', note:'An LLM-driven evolutionary search system with automatic evaluation improved a known construction for complex 4×4 matrix multiplication from 49 to 48 scalar multiplications.'},
-    swe: {label:'OpenAI, February 2026', title:'Why SWE-bench Verified no longer measures frontier coding capabilities', url:'https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/', note:'Evidence that executable tests and benchmark exposure can undermine evaluation. The talk makes no current SWE-bench leaderboard claim.'}
-  },
-  slides: [
-    {
-      id:'title', title:'Large language models', duration:45, className:'title-slide', steps:0,
-      html:`<h1>Large language models</h1><p class="subtitle">From next-token prediction to reasoning</p><p class="start-hint">Space or → to advance</p>`,
-      notes:`<p>We will build a mechanistic picture of a language model: what is being optimized, how text becomes a prediction, and how additional training changes what the model can do. Then we will ask where the evidence is strongest and where the future remains uncertain.</p><p>The central question is how such a simple objective can support such varied behavior. A short output does not imply a simple computation. We will use political and mathematical examples, but neither requires prior knowledge of those subjects.</p><p class="cue">The planned timings total 30 minutes, excluding questions. Advance at your own pace; no animation runs on a timer. P opens a separate presenter window.</p>`
+  "sources": {
+    "backprop": {
+      "label": "Rumelhart, Hinton & Williams, 1986",
+      "title": "Learning representations by back-propagating errors",
+      "url": "https://www.nature.com/articles/323533a0",
+      "note": "Backpropagation computes derivatives through a network. The loss landscape in the talk is a teaching example."
     },
-    {
-      id:'network', title:'A function with many adjustable numbers', duration:60, scene:'blackbox',
-      caption:'Parameters are the numbers learned during training.', sources:['backprop'],
-      notes:`<p>For now, treat the neural network as a function in a black box. Give it an input and it produces a prediction. The box contains a very large collection of adjustable numbers, called parameters or weights. Changing these numbers changes the function.</p><p>The network is not a collection of separately programmed facts or rules. Its computation is built from many simple numerical operations. Training chooses parameters that make those operations useful together.</p><p class="cue">Advance to reveal the parameters, then the output distribution. Emphasize that the bars are probabilities over possible continuations, not a single stored answer. These probabilities are illustrative.</p><p>We can understand learning before examining what is inside the box.</p>`
+    "transformer": {
+      "label": "Vaswani et al., 2017",
+      "title": "Attention Is All You Need",
+      "url": "https://arxiv.org/html/1706.03762v7",
+      "note": "Masked self-attention, learned query/key/value projections, residual updates, and positionwise transformations. The talk explains only the causal language-model stack."
     },
-    {
-      id:'loss', title:'Learning starts with a measurable error', duration:75, steps:2, sources:['backprop'],
-      html:`<p>Observed next token: <strong class="blue">blue</strong></p><div class="loss-example"><div><div class="label">Probability assigned to blue</div><div class="value">0.10 <span class="reveal" data-reveal="1">→ <strong class="blue">0.50</strong></span></div><div class="loss-track"><div class="loss-fill" style="width:10%" data-width-before="10%" data-width-after="50%" data-width-step="1"></div></div></div><div><div class="label">Loss</div><div class="value">2.30 <span class="reveal" data-reveal="1">→ <strong class="blue">0.69</strong></span></div></div></div><div class="formula-explain reveal" data-reveal="2"><span class="equation small">L = −log p(observed token)</span><p>A confident wrong prediction<br>receives a large penalty.</p></div>`,
-      notes:`<p>A loss function turns a prediction error into a number. For next-token training, the observed text supplies the target. Here the text actually continues with “blue”. The network initially assigns that token probability 0.1.</p><p>The usual loss is minus the logarithm of the probability given to the observed token. With natural logarithms, a probability of 0.1 gives a loss of about 2.30. If an update raises the probability to 0.5, the loss falls to about 0.69. There is no need to remember the logarithm; the key is that confidently missing the target is expensive.</p><p>Training averages this signal over many positions and many examples. Individual continuations can be ambiguous. The statistical goal is a useful probability distribution, not certainty about every sentence.</p><p class="cue">Reveal the improved prediction, then the equation. Next: how do we know which numbers in the box to change?</p>`
+    "cache": {
+      "label": "Hugging Face, Transformers documentation",
+      "title": "How caching works",
+      "url": "https://huggingface.co/docs/transformers/cache_explanation",
+      "note": "Per-layer key/value caching during autoregressive inference. Accessed 14 November 2026."
     },
-    {
-      id:'gradient', title:'Learning follows the local slope', duration:75, scene:'optimization',
-      caption:'A one-parameter illustration of a much larger optimization problem.', sources:['backprop'],
-      notes:`<p>Imagine plotting the loss against one adjustable number. The slope tells us which small change would reduce the loss locally. A gradient is the corresponding collection of slopes for all parameters.</p><p>Backpropagation efficiently computes those derivatives through the network. It does not try perturbing every parameter one by one. An optimizer uses the gradient to update the parameters; the learning rate controls the size of the step.</p><p class="cue">Advance through the tangent, downhill direction, and successive updates. The same cycle repeats on many batches of training examples.</p><p>The basic update is θ ← θ − η∇L. Modern optimizers modify this rule using information from previous gradients. Real loss surfaces have enormous dimension and are not smooth convex bowls like this teaching diagram. A step need not improve every example, and there is no guarantee of a global optimum.</p>`
+    "gpt3": {
+      "label": "Brown et al., GPT-3, 2020",
+      "title": "Language Models are Few-Shot Learners",
+      "url": "https://arxiv.org/abs/2005.14165",
+      "note": "GPT-3 demonstrated multiple tasks from examples in context, without task-specific gradient updates. The toy prompts in this talk are constructed illustrations."
     },
-    {
-      id:'autoregression', title:'One token at a time', duration:75, scene:'autoregression',
-      caption:'Tokens can be words, fragments, punctuation, or other encoded pieces.', sources:['gpt3'],
-      notes:`<p>The model takes a sequence of tokens and returns a distribution over the next token. We choose one continuation, append it to the sequence, and repeat. “Autoregressive” means that the model conditions later predictions on earlier values, including its own previous outputs.</p><p class="cue">Show the distribution, select “blue”, then append it and predict again. The toy probabilities and token boundaries are for teaching, not measured model outputs.</p><p>A token is an encoded piece of text; it is not always a word. Different tokenizers split the same text differently. For readability, most examples in this talk show meaningful words or expressions.</p><p>Sampling can yield different answers from the same prompt. Ordinary generation keeps the model parameters fixed. What changes during an answer is the context and its activations. Choosing the most probable token every time is one possible decoding rule, not a requirement.</p>`
+    "llama": {
+      "label": "The Llama 3 Herd of Models, 2024",
+      "title": "The Llama 3 Herd of Models",
+      "url": "https://arxiv.org/html/2407.21783v3",
+      "note": "The flagship Llama 3.1 model was pretrained on 15.6 trillion text tokens. Training tokens are not a count of unique words."
     },
-    {
-      id:'training-text', title:'One passage supplies many training examples', duration:45, steps:2, sources:['transformer'],
-      html:`<div class="training-rows"><span>Input positions</span><div class="token-row"><span class="token">The</span><span class="token">sky</span><span class="token">is</span><span class="token">blue</span></div><span class="reveal" data-reveal="1">Targets</span><div class="token-row training-targets reveal" data-reveal="1"><span class="token">sky</span><span class="token">is</span><span class="token">blue</span><span class="token">.</span></div></div><p class="spaced reveal" data-reveal="2">Each position can see only itself and earlier positions.</p><p class="caption">Training predicts many positions in parallel. Generation must choose the next token first.</p>`,
-      notes:`<p>During training we already have the whole passage. Shift the target sequence by one position: from “The” predict “sky”; from “The sky” predict “is”; and so on. The target is the observed continuation, even if the model would have chosen something else.</p><p>A causal mask prevents any position from looking ahead at its answer. Each layer can therefore process many positions in parallel. The final layer supplies their next-token predictions. This is different from generating new text, where the next token has not yet been chosen.</p><p>The prompt can also be processed in parallel before generation begins. Autoregressive generation is sequential across newly generated tokens, not a claim that all computation inside a model happens serially.</p>`
+    "politics": {
+      "label": "Deutscher Bundestag, historical archive",
+      "title": "27. April 1972: Das Misstrauensvotum gegen Willy Brandt",
+      "url": "https://www.bundestag.de/dokumente/textarchiv/1972-04-27-misstrauensvotum-brandt-890810",
+      "note": "The official account gives 496 voting members, 260 votes cast, 247 in favor, and 249 required. The teaching prompt is paraphrased."
     },
-    {
-      id:'data', title:'“All the text that has ever existed”?', duration:45, steps:1, sources:['llama','gpt3'],
-      html:`<p class="big">A vast, selected sample.</p><div class="data-names"><span>Web pages</span><span>Books</span><span>Code</span><span>Other text</span></div><div class="reveal spaced" data-reveal="1"><p><span class="blue">15.6 trillion</span> training tokens</p><p class="caption">Llama 3.1, 2024. Coverage is incomplete and uneven.</p></div>`,
-      notes:`<p>“All the text that has ever existed” is a vivid exaggeration. Training corpora are finite, selected mixtures. Much human knowledge was never written down, much text is inaccessible, and filtering changes what remains.</p><p>As a documented scale example, the flagship Llama 3.1 model used 15.6 trillion text tokens. Counts of training tokens are not counts of unique words or documents; some material may be sampled repeatedly. Data mixtures differ across models, and full details are often unavailable.</p><p>Training changes the parameters. It does not give the resulting model a live connection to every source. It can learn broad regularities and can also memorize particular passages. Uneven coverage, outdated information, and errors in the data all matter.</p>`
+    "fields": {
+      "label": "MIT OpenCourseWare, Algebra II, Lecture 26",
+      "title": "Finite Fields",
+      "url": "https://ocw.mit.edu/courses/res-18-012-algebra-ii-student-notes-spring-2022/mit18_702s22_lec26.pdf",
+      "note": "A finite field has prime-power order and characteristic equal to that prime. The 256-element example is a direct mathematical deduction."
     },
-    {
-      id:'politics', title:'A continuation can require political knowledge', duration:60, steps:2, sources:['politics'],
-      html:`<p class="quote-prompt">In 1972, Barzel won <strong>247 of 260 votes cast</strong> in a Bundestag with 496 voting members.<br>His attempt to replace Brandt <span class="answer-blank"><span class="reveal completion" data-reveal="1">failed</span></span>.</p><p class="reveal spaced" data-reveal="2">The rule required <span class="blue">249 votes</span>: a majority of all voting members.</p>`,
-      notes:`<p>Pause before completing the sentence. Exactly 95 percent of the votes cast supported Barzel. The natural guess from those numbers alone is that he succeeded.</p><p class="cue">Reveal “failed”. Then reveal the required majority.</p><p>The constructive vote of no confidence in West Germany required an absolute majority of all voting Bundestag members, not merely the votes cast. Of 496 voting members, 249 had to support the successor. Barzel received 247.</p><p>Reliable prediction across political text benefits from knowing institutions and interpreting their consequences. This is a constructed teaching prompt based on the official parliamentary record. A model might memorize this particular event; one correct continuation does not establish human-like understanding. The point is the richness of the knowledge that can be useful for predicting text.</p>`
+    "instruct": {
+      "label": "Ouyang et al. / OpenAI, 2022",
+      "title": "Aligning language models to follow instructions",
+      "url": "https://openai.com/index/instruction-following/",
+      "note": "InstructGPT used demonstrations and human preference feedback. The small-model preference result is for that combined pipeline and the evaluated prompts."
     },
-    {
-      id:'mathematics', title:'A few words can change the mathematics', duration:60, steps:2, sources:['fields'],
-      html:`<p>In a field with 256 elements,</p><p class="equation">1 + 1 = <span class="answer-blank"><span class="reveal completion" data-reveal="1">0</span></span></p><p class="reveal spaced" data-reveal="2">256 = 2⁸, so the field has characteristic 2.</p>`,
-      notes:`<p>No prior knowledge of finite fields is needed. The phrase “a field with 256 elements” specifies a particular kind of number system. It changes the correct continuation of the most familiar arithmetic expression.</p><p>A finite field has p to the n elements for a prime p, and its characteristic is p. Since 256 is 2 to the 8, adding one to itself gives zero. This is not arithmetic modulo 256, which is not a field.</p><p class="cue">Reveal zero, then the short explanation. Leave a moment for the surprise.</p><p>The output is tiny; the relevant mathematical structure is not. Predicting mathematical text consistently can reward learning that structure. The training objective specifies what counts as success, not how simple the learned computation must be. Again, this is a known mathematical example, not a measurement of a named model.</p>`
+    "o1": {
+      "label": "OpenAI, September 2024",
+      "title": "Learning to reason with LLMs",
+      "url": "https://openai.com/index/learning-to-reason-with-llms/",
+      "note": "Historical report of gains from reasoning RL and additional inference computation. The talk does not use a 64-sample consensus result as single-attempt accuracy."
     },
-    {
-      id:'transformer', title:'Inside the box: repeated layers', duration:60, scene:'transformer',
-      caption:'The last observed token is processed to predict the next token.', sources:['transformer'],
-      notes:`<p>Now open the black box. Each token becomes a vector, a list of numbers representing it. Position information lets the model distinguish different orders. The vector is repeatedly updated through a stack of layers.</p><p>Each layer contains attention and a transformation applied at each position. Attention combines information from the context. The local transformation computes with that information. Residual connections add updates to the representation instead of replacing it wholesale.</p><p class="cue">Build the stack from the bottom. At the top, show the next-token distribution.</p><p>The highlighted position contains an actual observed token. Its final representation predicts the following token. We do not feed an unknown blank future token through the network before choosing it. A realistic model has many layers and attention heads; three layers are enough to show the mechanism.</p>`
+    "r1": {
+      "label": "DeepSeek-AI, January 2025",
+      "title": "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning",
+      "url": "https://arxiv.org/html/2501.12948v1",
+      "note": "R1-Zero AIME 2024 estimated pass@1 rose from 15.6% to 71.0% during RL. Figure 2 averages 16 responses per question; this is not best-of-16 success."
     },
-    {
-      id:'attention', title:'Attention matches keys and combines values', duration:90, scene:'attention',
-      caption:'Q asks. K determines the match. V supplies the information to combine.', sources:['transformer'],
-      notes:`<p>At one layer, the current position makes a query, Q. Each available position, including the current one, has a key, K, and a value, V. All three are numerical projections made with learned parameters.</p><p>The query is compared with each key. The resulting scores become nonnegative weights that sum to one. The model then takes a weighted combination of the values. Keys determine how much to read; values determine what information arrives.</p><p class="cue">Advance from the query, to key comparisons, to normalized weights, then to value mixing. Read the wide and narrow paths as larger and smaller contributions. The weights are illustrative.</p><p>For one head, the weights are softmax(q·k/√d), and the result is the sum of weight times value. Several heads do this in parallel. The analogy of “asking” is useful, but these are numerical operations, not a conscious lookup. An attention map alone does not completely explain an answer.</p>`
+    "aime": {
+      "label": "MAA, AIME I 2024, Problem 1 (paraphrased)",
+      "title": "2024 AIME I problems, authorized reproduction",
+      "url": "https://live.poshenloh.com/past-contests/aime/2024I",
+      "note": "MAA-authored problem reproduced with permission. The walk-and-café question is the opening item, chosen for accessibility. Its answer is 204 minutes."
     },
-    {
-      id:'flow', title:'Two directions of information flow', duration:105, scene:'flow',
-      caption:'Blue: the current representation. Rust: information read from K,V at the same layer.', sources:['transformer','cache'],
-      notes:`<p>This is the diagram to dwell on. Read upward for layers and left to right for positions in the text. The earlier positions have already produced their layer-specific activations. The right-hand column is the current observed token.</p><p class="cue">First follow the blue representation upward. Then reveal the lateral inputs to the first attention operation. Repeat for the next layers.</p><p>At each layer, the current query matches keys made from that layer’s input representations. Their associated values contribute an attention update. That update and a local transformation modify the current representation before it moves to the next layer. The next layer uses its own keys and values.</p><p>Earlier tokens’ final outputs are not injected into every layer. The lateral connections join the appropriate layer. The current position can also attend to itself; future positions are excluded. Earlier activations stay fixed during this generation step because causal attention prevents them from depending on later tokens.</p><p>Weights are persistent learned parameters. K,V here are temporary activations for this particular text.</p>`
+    "humaneval": {
+      "label": "Chen et al., 2021",
+      "title": "Evaluating Large Language Models Trained on Code",
+      "url": "https://arxiv.org/abs/2107.03374",
+      "note": "Primary reference for evaluating generated functions with tests. The missing-positive-integer exercise is an original teaching example, not a quoted HumanEval item or measured model run."
     },
-    {
-      id:'cache', title:'The next token reuses earlier work', duration:45, scene:'cache',
-      caption:'The KV cache stores context activations at every layer. Model parameters stay fixed.', sources:['cache'],
-      notes:`<p>After choosing the next token, append it to the context and process that new position. Earlier keys and values can be reused, because future tokens cannot change them under the causal mask.</p><p>The cache grows with the context and contains separate entries at each layer. It holds activations, not newly learned weights. This is one reason longer contexts consume memory.</p><p class="cue">Advance to store the current K,V, then move the active position to the newly generated token. The old entries remain fixed while the new query reads them.</p><p>Now we have the core computation. The same architecture can behave very differently depending on what happens during training.</p>`
+    "imo": {
+      "label": "IMO 2025, Problem 4 (paraphrased)",
+      "title": "IMO 2025 problems",
+      "url": "https://www.imo-official.org/problems/2025/",
+      "note": "Paraphrased divisor-sequence problem. The displayed 18 and 12 examples are direct arithmetic illustrations."
+    },
+    "gemini": {
+      "label": "Google DeepMind / IMO coordinators, July 2025",
+      "title": "Advanced Gemini Deep Think reaches gold-medal standard at IMO 2025",
+      "url": "https://deepmind.google/blog/advanced-version-of-gemini-with-deep-think-officially-achieves-gold-medal-standard-at-the-international-mathematical-olympiad/",
+      "note": "35/42, five of six problems, officially graded. An advanced evaluation system with additional RL, mathematical data, and parallel reasoning; not an isolated RL ablation."
+    },
+    "imoresults": {
+      "label": "IMO, official 2025 results",
+      "title": "66th International Mathematical Olympiad results",
+      "url": "https://www.imo-official.org/editions/2025/",
+      "note": "Gold-medal-level is not better than every contestant. Five human contestants scored 42/42."
+    },
+    "alphaevolve": {
+      "label": "Google DeepMind, May 2025",
+      "title": "AlphaEvolve: a Gemini-powered coding agent for designing advanced algorithms",
+      "url": "https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/",
+      "note": "An LLM-driven evolutionary search system with automatic evaluation improved a known construction for complex 4×4 matrix multiplication from 49 to 48 scalar multiplications."
+    },
+    "swe": {
+      "label": "OpenAI, February 2026",
+      "title": "Why SWE-bench Verified no longer measures frontier coding capabilities",
+      "url": "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/",
+      "note": "Evidence that executable tests and benchmark exposure can undermine evaluation. The talk makes no current SWE-bench leaderboard claim."
     }
-    ,{
-      id:'pretraining', title:'Pretraining learns to continue text', duration:75, steps:1, sources:['gpt3'],
-      html:`<div class="columns"><div><p class="quiet">2020 · GPT-3</p><p class="big">Tasks specified<br>in the prompt.</p></div><div><pre class="fewshot">sea → mer
-sun → soleil
-house → <span class="reveal blue" data-reveal="1">maison</span></pre><p class="example-label">Constructed few-shot illustration</p></div></div><p class="caption spaced">The examples change the context. The parameters do not change while answering.</p>`,
-      notes:`<p>Pretraining is the large-scale next-token learning process we have just described. The data contain many kinds of structure: descriptions, arguments, dialogue, code, worked solutions, and patterns relating one language to another.</p><p>GPT-3 in 2020 made the breadth of this approach especially visible: one pretrained model could attempt translation, question answering, and other tasks from examples placed in the prompt, without task-specific parameter updates.</p><p class="cue">Reveal the French continuation. This tiny demonstration illustrates the format; it is not a recorded GPT-3 response.</p><p>In-context learning changes the computation by changing its input. It is different from training the weights. Pretraining gave models broad capabilities, but a model trained to continue arbitrary text was not yet a reliably helpful conversational assistant.</p>`
+  },
+  "slides": [
+    {
+      "id": "title",
+      "title": "Large language models",
+      "duration": 45,
+      "className": "title-slide",
+      "steps": 0,
+      "html": "<div class=\"title-content\"><h1>Large language models</h1><p>Learning, attention and reasoning</p></div>",
+      "notes": "<p>I will start with how a neural network learns from examples, then apply that idea to language. We will follow a token through a transformer and look at how more recent training methods have changed what these models can do.</p><p>The examples will include political history and mathematics. You do not need to know either subject in advance; their purpose is to show how much can be involved in choosing a short continuation. We will finish with the difference between checking an answer by calculation and checking it by doing an experiment.</p><p class=\"cue\">The planned timings total 30 minutes, excluding questions. Space or Right Arrow advances each build. P opens the presenter window; N opens notes.</p>"
     },
     {
-      id:'instructions', title:'Instruction tuning: learn from demonstrations', duration:75, steps:2, sources:['instruct'],
-      html:`<div class="dialogue"><p class="prompt">“Explain why the Moon has phases.”</p><p class="response reveal" data-reveal="1">We see different portions of its sunlit half as it orbits Earth.</p></div><p class="reveal spaced" data-reveal="2">Train on the desired response, one token at a time.</p><p class="caption">2022 · InstructGPT combined demonstrations with human preference feedback.</p>`,
-      notes:`<p>Instruction tuning gives the model examples of prompts paired with desirable answers. The learning machinery can remain ordinary next-token prediction, now applied to assistant responses in a structured conversation.</p><p class="cue">Reveal the response, then the training rule. This is an illustrative prompt and answer, not a source transcript.</p><p>InstructGPT’s full 2022 pipeline also used human preferences. In the reported API-prompt evaluation, labelers preferred its 1.3-billion-parameter model to the original 175-billion-parameter GPT-3. That result belongs to the combined instruction-tuning and feedback pipeline, not supervised tuning alone.</p><p>The comparison concerns preference on the evaluated prompts, not superiority on every task. It nevertheless shows why model size alone does not tell us how useful a system will be. Training changes what kind of continuation the model tends to produce.</p>`
+      "id": "network",
+      "title": "Neural networks",
+      "duration": 60,
+      "scene": "blackbox",
+      "sources": [
+        "backprop"
+      ],
+      "notes": "<p>Suppose we have numerical measurements and want to predict another quantity. We can represent the predictor as a function: put numbers in and get a number out. For this illustration the input is 2 and the network predicts 3. The units and the particular application do not matter.</p><p>Inside the box are many adjustable numbers, called parameters or weights. Changing them changes the function. We do not need to draw all the individual operations to understand training. We need examples of inputs and the outputs that were actually observed, and a way of comparing the predictions with those observations.</p><p>A useful predictor should also work on examples that were not used to fit it. Getting a low error on the training examples alone is not enough.</p><p class=\"cue\">Reveal the parameters, then the numerical prediction. Keep this same example for the loss slide. Do not introduce language modelling yet.</p>"
     },
     {
-      id:'preferences', title:'Human preferences provide another training signal', duration:60, steps:2, sources:['instruct'],
-      html:`<div class="method-row"><div>Generate<br>several responses</div><div class="method-arrow reveal" data-reveal="1">→</div><div class="reveal" data-reveal="1">People rank<br>the responses</div><div class="method-arrow reveal" data-reveal="2">→</div><div class="reveal" data-reveal="2">Train toward<br>higher reward</div></div><p class="reveal spaced" data-reveal="2"><span class="blue">1.3B InstructGPT</span> preferred to 175B GPT-3</p><p class="caption">2022 · Human ratings on tested prompts. Demonstrations + preference training.</p>`,
-      notes:`<p>Demonstrations are one signal; comparisons are another. Generate several responses, ask people which they prefer, and train a reward model to predict those rankings. Reinforcement learning can then increase the probability of responses with higher predicted reward.</p><p>This is a common RLHF pattern, although implementations differ and some preference-training methods do not use an online RL loop. It helps explain the shift toward useful conversational behavior.</p><p>People can prefer a clear, confident explanation that is wrong. A learned reward can also be exploited. A reward is a measurable training target, not an automatic certificate of truth.</p><p>For reasoning tasks, we can sometimes obtain a different kind of feedback: test whether the proposed answer actually works. That leads to the next training stage.</p>`
+      "id": "loss",
+      "title": "Loss functions",
+      "duration": 75,
+      "sources": [
+        "backprop"
+      ],
+      "notes": "<p>For this input, the observed output was 5. The prediction was 3, so the error is minus 2. A loss function converts that discrepancy into a number that we try to reduce. Squared error is one choice: here it gives 4.</p><p>Squaring makes both positive and negative errors costly and penalizes larger errors more strongly. Other tasks call for other loss functions. The choice specifies what the training procedure is trying to achieve.</p><p>In practice we compute an average over many examples. Changing one parameter can improve some predictions while worsening others, so we use the aggregate loss. We now have a numerical objective, but a network may have billions of parameters. How do we decide which of them to change?</p><p class=\"cue\">Reveal the observed value and the error, then squared error. The network and its prediction stay in the same positions as on the preceding slide.</p>",
+      "scene": "loss"
     },
     {
-      id:'reasoning', title:'Intermediate tokens provide a working space', duration:75, steps:3, sources:['o1'],
-      html:`<p>What is 17 × 19?</p><div class="scratch-lines"><div class="reveal" data-reveal="1">17 × (20 − 1)</div><div class="reveal" data-reveal="2">340 − 17</div><div class="reveal blue" data-reveal="3">323</div></div><p class="caption spaced">2024 · o1 made reasoning training and extra inference computation prominent.</p>`,
-      notes:`<p>Each new token triggers another pass through the network. Intermediate tokens can carry partial results that later tokens read through attention. A sequence of computations can therefore be distributed across many generation steps.</p><p class="cue">Reveal the decomposition, intermediate subtraction, and final answer. This is an intentionally simple worked illustration, not a model trace.</p><p>The 2024 o1 report made reasoning training and additional inference computation a prominent part of the capability story. It reported improvements with more RL during training and more computation while answering.</p><p>Merely producing a longer answer is not sufficient. The challenge is learning useful intermediate computations, checks, and revisions. Visible reasoning text also need not be a faithful report of every internal computation. At inference time, reasoning usually changes the context and activations, not the model’s weights.</p>`
+      "id": "gradient",
+      "title": "Gradient descent",
+      "duration": 75,
+      "scene": "optimization",
+      "sources": [
+        "backprop"
+      ],
+      "notes": "<p>This curve shows a deliberately simple one-parameter example: the prediction is the parameter itself, and the target is 5. At our starting value of 3, the squared loss is 4.</p><p>The tangent gives the local slope. Here that slope is negative, so increasing the parameter reduces the loss. Gradient descent subtracts the slope multiplied by a learning rate. With a learning rate of 0.2, the first update moves the parameter from 3 to 3.8. Subsequent updates move it closer to 5.</p><p>For a full network, there is one derivative for each parameter; together they form the gradient. Backpropagation calculates these derivatives through the network using the chain rule. The optimizer uses them to update the parameters, and the process repeats on batches of examples.</p><p>Real loss surfaces have many dimensions and are much more complicated than this curve. Modern optimizers also use information from previous gradients. An update need not improve every example, and it need not find the best possible solution.</p><p class=\"cue\">Show the tangent and direction before advancing through the parameter updates. We have now introduced a general learning procedure; the next slide chooses a particular task for it.</p>"
     },
     {
-      id:'rl', title:'Reinforcement learning with a checker', duration:90, steps:3, sources:['r1'],
-      html:`<p>Find positive integers with sum 10 and product 21.</p><div class="rl-layout"><div class="attempts"><div>2, 8</div><div>3, 7</div><div>4, 6</div></div><div class="reveal" data-reveal="1"><div class="check-box">Check both<br>constraints</div></div><div class="attempts reveal" data-reveal="2"><div class="bad">16 ≠ 21</div><div class="good">✓ 10 and 21</div><div class="bad">24 ≠ 21</div></div></div><p class="reveal spaced" data-reveal="3">Update the model to make successful trajectories more likely.</p><p class="caption">Training loop: attempt, evaluate, update, repeat.</p>`,
-      notes:`<p>During training, sample multiple solution attempts. A checker can evaluate the final answer, or sometimes intermediate steps. An RL update changes the probability of the generated trajectories according to their rewards.</p><p class="cue">Show the checker, then the outcomes, then the update. In this example both constraints must hold. The actual training set contains many different problems.</p><p>The checker does not have to be differentiable. The model can use a policy-gradient-style learning signal based on the probabilities of its generated tokens and the observed reward. We are not backpropagating through a yes-or-no mathematical proof checker.</p><p>A final-answer reward does not specify the best reasoning route, and successful-looking answers can exploit a weak checker. Still, reliable feedback can make repeated search and learning much more effective. Keep this training update separate from ordinary answering, during which the weights remain fixed.</p>`
+      "id": "autoregression",
+      "title": "Autoregressive prediction",
+      "duration": 75,
+      "scene": "autoregression",
+      "sources": [
+        "gpt3"
+      ],
+      "notes": "<p>For a language model, the input is text represented as a sequence of tokens. A token may be a word, part of a word, punctuation or another encoded piece. The network produces probabilities for the token that follows the input.</p><p>Here it reads “The sky is” and gives a higher probability to “blue” than to the alternatives shown. After choosing “blue”, we add it to the input and run the model again. The next prediction now depends on “The sky is blue”. This repeated conditioning on previous values is called autoregressive prediction.</p><p>Choosing the highest-probability token is one option; sampling from the distribution can produce different continuations. The model uses the same trained parameters for each pass. A growing answer changes its input and intermediate activations.</p><p>The probabilities and word-sized tokens in this animation are for illustration. An actual vocabulary contains many more alternatives, and its tokenizer may split these words differently.</p><p class=\"cue\">Read the first distribution, select and append blue, then process the expanded context to predict punctuation.</p>"
     },
     {
-      id:'aime', title:'What does a mathematics benchmark ask?', duration:75, steps:1, sources:['aime'],
-      html:`<p class="bench-question">A 9 km walk, followed by the same café stop:</p><table class="bench-table"><thead><tr><th>Walking speed</th><th>Total time</th></tr></thead><tbody><tr><td><i>s</i> km/h</td><td>4 hours</td></tr><tr><td><i>s</i> + 2 km/h</td><td>2 hours 24 minutes</td></tr><tr><td><i>s</i> + ½ km/h</td><td><span data-until="1">?</span><span class="reveal" data-reveal="1">204</span> minutes</td></tr></tbody></table><p class="caption">AIME I 2024, opening problem. The answer is a single integer.</p>`,
-      notes:`<p>Before showing a benchmark score, look at a real task. The walker covers the same 9 km and spends the same amount of time at the café. At speed s the total is four hours; at s plus two it is two hours and 24 minutes. What is the total at s plus one half?</p><p>Let T be the stop duration in hours. The equations are 9/s + T = 4 and 9/(s + 2) + T = 2.4. Their positive solution is s = 2.5 km/h and T = 0.4 hours. At 3 km/h, the walk takes three hours; add 24 minutes to obtain 204.</p><p class="cue">Reveal the answer. You need not solve it live; the point is the kind of reasoning required.</p><p>This is the opening AIME problem, chosen to be approachable. Later questions are substantially harder. An answer key makes the final result cheap to score, even if finding it is difficult.</p>`
+      "id": "training-text",
+      "title": "Training on text",
+      "duration": 45,
+      "steps": 2,
+      "sources": [
+        "transformer"
+      ],
+      "html": "<div class=\"training-layout\"><table class=\"academic-table prefix-table\"><thead><tr><th>Input</th><th>Observed continuation</th></tr></thead><tbody><tr><td>The</td><td class=\"blue\">sky</td></tr><tr class=\"reveal\" data-reveal=\"1\"><td>The sky</td><td class=\"blue\">is</td></tr><tr class=\"reveal\" data-reveal=\"1\"><td>The sky is</td><td class=\"blue\">blue</td></tr><tr class=\"reveal\" data-reveal=\"1\"><td>The sky is blue</td><td class=\"blue\">.</td></tr></tbody></table><div class=\"text-loss reveal\" data-reveal=\"2\"><div class=\"math\">L = −log p</div><dl><dt>p = 0.10</dt><dd>L = 2.30</dd><dt>p = 0.50</dt><dd>L = 0.69</dd></dl></div></div>",
+      "notes": "<p>A passage supplies its own targets. After “The” the observed continuation is “sky”. After “The sky” it is “is”, and so on. We can obtain vast numbers of training examples without asking a person to label each one.</p><p>The loss for this task is minus the logarithm of the probability assigned to the observed token. If that probability is 0.1, the loss is about 2.30. At probability 0.5, the loss falls to about 0.69. We average this over positions and examples, then use gradients to adjust the parameters as before.</p><p>During training the whole passage is available, so its positions can be processed in parallel. A causal mask prevents a position from reading the continuation it is being asked to predict. Generation must wait until a new token has been chosen before it can use that token as context.</p><p class=\"cue\">Reveal the remaining training pairs, then the language-model loss. Here p refers to the probability of the observed continuation in each row.</p>"
     },
     {
-      id:'rl-result', title:'Progress during reinforcement learning', duration:75, steps:1, sources:['r1'],
-      html:`<p class="quiet">DeepSeek-R1-Zero · AIME 2024</p><div class="bars"><span class="bar-label">Before RL</span><div class="bar-track"><div class="bar" style="width:15.6%"></div></div><span class="bar-value">15.6%</span><span class="bar-label reveal" data-reveal="1">After RL</span><div class="bar-track reveal" data-reveal="1"><div class="bar blue-bar" style="width:71%"></div></div><span class="bar-value blue reveal" data-reveal="1">71.0%</span></div><div class="bar-scale"><span>0%</span><span>100%</span></div><p class="caption spaced">Estimated single-attempt accuracy. Same pretrained starting model.</p>`,
-      notes:`<p>This January 2025 result starts from a pretrained model and follows its improvement during reinforcement learning. The reported AIME 2024 estimated single-attempt accuracy rises from 15.6 to 71.0 percent.</p><p>Figure 2 averages 16 sampled responses per question to estimate pass-at-one. It is not success after choosing the best of 16 answers. R1-Zero skipped preliminary supervised instruction tuning; “Zero” does not mean it lacked pretraining.</p><p>The reward included correctness and formatting. Longer reasoning and checking behavior emerged, alongside readability problems. Production R1 used additional supervised and RL stages.</p><p>This is stronger evidence for an RL contribution than a comparison between unrelated model releases. It still does not establish that any domain will improve equally, or that increasing answer length alone caused the gain.</p>`
+      "id": "data",
+      "title": "Training data",
+      "duration": 45,
+      "steps": 1,
+      "sources": [
+        "llama",
+        "gpt3"
+      ],
+      "html": "<div class=\"corpus-layout\"><div class=\"corpus-sources\"><p>Web pages</p><p>Books</p><p>Code</p></div><div class=\"corpus-brace\" aria-hidden=\"true\">→</div><div class=\"corpus-result\"><p class=\"corpus-name\">Llama 3.1 · 2024</p><p class=\"corpus-count\">15.6 trillion</p><p>training tokens</p><p class=\"corpus-limit reveal\" data-reveal=\"1\">Selected, filtered and sampled.<br>Much text is missing.</p></div></div>",
+      "notes": "<p>“All the text that has ever existed” is an exaggeration. Training uses a finite collection assembled from sources such as web pages, books and code. Some material cannot be accessed; some is excluded by filtering; much human knowledge was never written down.</p><p>For a documented example of the scale, the flagship Llama 3.1 model was pretrained on 15.6 trillion text tokens. This is a count of tokens encountered during training, not unique words or unique documents. Sampling can repeat material. Data mixtures differ across models, and their full composition is often undisclosed.</p><p>Pretraining changes the network’s parameters. The trained model can learn regularities and also memorize passages, but it does not thereby acquire a live connection to every source. The age and coverage of the training collection matter.</p>"
     },
     {
-      id:'code', title:'Code can be checked by running it', duration:60, steps:2, sources:['humaneval','swe'],
-      html:`<p>Return the smallest missing positive integer.</p><div class="test-row"><span>[3, 4, −1, 1]</span><span>→</span><span class="reveal blue" data-reveal="1">2</span><span>[1, 2, 3]</span><span>→</span><span class="reveal blue" data-reveal="1">4</span><span>[]</span><span>→</span><span class="reveal blue" data-reveal="1">1</span></div><p class="reveal spaced" data-reveal="2">Hidden tests check new cases. Passing tests is evidence within their coverage.</p><p class="caption">Constructed coding exercise, illustrating executable evaluation.</p>`,
-      notes:`<p>In coding, a benchmark can specify a function and execute the generated program against tests. Here the requested output is the smallest positive integer absent from the input. Different inputs expose different mistakes, including mishandling an empty list.</p><p>Hidden tests prevent a solution from merely listing the examples shown in the prompt. Richer tasks can require editing a repository and preserving existing behavior. This is a powerful source of fast feedback, both for evaluation and for training.</p><p>Tests are nevertheless incomplete specifications. They can miss errors or reject valid solutions. Benchmark data can also leak into training. OpenAI’s February 2026 analysis of SWE-bench Verified is a concrete reminder of these problems. We therefore distinguish a program that passes a particular test suite from one that is correct in every real setting.</p><p>This exercise is illustrative, not an actual benchmark score or a live generated program.</p>`
+      "id": "politics",
+      "title": "The 1972 Bundestag vote",
+      "duration": 60,
+      "steps": 2,
+      "sources": [
+        "politics"
+      ],
+      "html": "<div class=\"political-example\"><p class=\"problem\">Barzel received 247 of the 260 votes cast.<br>His attempt to replace Brandt <span class=\"answer-slot\"><span class=\"reveal blue\" data-reveal=\"1\">failed</span></span>.</p><table class=\"academic-table reveal\" data-reveal=\"2\"><tbody><tr><th>Voting members</th><td>496</td></tr><tr><th>Votes required</th><td>249</td></tr><tr><th>Votes for Barzel</th><td>247</td></tr></tbody></table></div>",
+      "notes": "<p>Take a moment to choose a continuation. Barzel received exactly 95 percent of the votes cast, so if we only consider those numbers, success seems the obvious guess.</p><p>The attempt failed. This was a constructive vote of no confidence in West Germany. The rule required a majority of all voting members of the Bundestag, not just those who cast a vote. There were 496 voting members, so Barzel needed 249 votes and received 247.</p><p>Reliable prediction of political writing can depend on knowing the relevant institutions and applying their rules. A model could memorize this particular event; one correct completion would not tell us whether it had reasoned about the rule. Across many texts, however, learning such structure can help with prediction. The task gives a reason to acquire knowledge far beyond word frequencies.</p><p class=\"cue\">Pause at the blank, reveal failed, then show the parliamentary arithmetic.</p>"
     },
     {
-      id:'imo-task', title:'What does an olympiad proof require?', duration:90, steps:3, sources:['imo'],
-      html:`<p class="bench-question">Replace an integer by the sum of its three largest proper divisors.<br>Which starting integers let this continue forever?</p><div class="imo-walk"><div class="reveal" data-reveal="1">18 → 9 + 6 + 3 = 18 → 18 → …</div><div class="reveal" data-reveal="2">12 → 6 + 4 + 3 = 13 → stops</div></div><p class="reveal spaced" data-reveal="3">Classify <strong>every</strong> possible start, and prove it.</p><p class="caption">Every term must have at least three proper divisors. IMO 2025, Problem 4, paraphrased.</p>`,
-      notes:`<p>A proper divisor is a positive divisor smaller than the number itself. We repeatedly add the three largest proper divisors, requiring every term to have at least three.</p><p class="cue">Show 18 first. Its three largest proper divisors are 9, 6, and 3, so it returns to itself forever. Next show 12: it goes to 13, which is prime and has only one proper divisor, so the process stops.</p><p>The problem is not to calculate these two examples. It is to characterize every positive integer that permits an infinite sequence and prove that the characterization is complete. That distinction explains why a short problem statement can require substantial reasoning.</p><p>At the IMO, expert graders assess the mathematical proof, not just a final multiple-choice answer. Proof checking is more demanding than comparing an integer with an answer key; formal proof systems can make some verification automatic.</p>`
+      "id": "mathematics",
+      "title": "Arithmetic in a finite field",
+      "duration": 60,
+      "steps": 2,
+      "sources": [
+        "fields"
+      ],
+      "html": "<div class=\"finite-field\"><p>In a field with 256 elements,</p><div class=\"math finite-equation\">1 + 1 = <span class=\"answer-slot\"><span class=\"reveal blue\" data-reveal=\"1\">0</span></span></div><div class=\"field-explanation reveal\" data-reveal=\"2\"><span class=\"math\">256 = 2⁸</span><span>Characteristic 2</span></div></div>",
+      "notes": "<p>The correct continuation is zero. The words “a field with 256 elements” specify a number system in which the usual-looking symbols have this consequence. You do not need to know finite fields to see what the example demands of a predictor.</p><p>A finite field has a prime-power number of elements. If that number is p to the n, its characteristic is p: adding one to itself p times gives zero. Since 256 is 2 to the 8, one plus one is zero. This is different from arithmetic modulo 256, which is not a field.</p><p>To predict mathematical text reliably, the model benefits from relationships between definitions, theorems and calculations. The shortness of the next token does not limit the complexity of the calculation that could help predict it. This example is a mathematical deduction, not a recorded response from a particular model.</p><p class=\"cue\">Reveal zero before the explanation. Leave time for the audience to register why the context matters.</p>"
     },
     {
-      id:'imo-result', title:'2025: gold-medal-level mathematical proofs', duration:60, steps:1, sources:['gemini','imoresults'],
-      html:`<div class="score-layout"><div class="large-number blue">35<span style="font-size:62px;color:#747e89"> / 42</span></div><div class="score-detail"><p>Advanced Gemini Deep Think</p><p class="quiet">Five of six IMO problems.<br>Officially graded solutions.</p></div></div><p class="reveal spaced" data-reveal="1">Additional RL, mathematical data, and parallel reasoning.</p><p class="caption">A specialized evaluation system. Gold-medal level does not mean better than every human.</p>`,
-      notes:`<p>In July 2025, an advanced Gemini Deep Think system earned 35 out of 42 points, solving five of the six IMO problems, including the divisor problem we just saw. IMO coordinators officially graded the natural-language solutions.</p><p>The result is gold-medal-level performance. It is above most competitors, but five human contestants scored 42. Do not turn this into a claim of exceeding every human mathematician.</p><p>This system combined additional RL, mathematical solution data, and parallel exploration of reasoning paths. Its score cannot isolate the effect of RL alone. It is also a result for the evaluated system, not a promise about every response from an ordinary chat product.</p><p>The progress from broad text continuation to proofs at this level is substantial. The remaining question is how much of this success depends on the availability of useful feedback.</p>`
+      "id": "transformer",
+      "title": "Transformers",
+      "duration": 60,
+      "scene": "transformer",
+      "sources": [
+        "transformer"
+      ],
+      "notes": "<p>We can now look inside the network. Each token is represented by a vector, which is a list of numbers. The representation is repeatedly updated through a stack of layers. Information about position lets the model distinguish different orders.</p><p>A layer combines attention with a transformation applied separately at each position. Attention reads information from the available context; the other transformation computes an update using the resulting representation. Residual connections add those updates to the running representation. Normalization and other details are omitted from this diagram.</p><p>Follow the last observed token upwards. At the top, its representation is converted into probabilities for the following token. We choose that next token only after these computations. The diagram uses three layers for readability; large models have many more.</p><p class=\"cue\">Build the path from the observed token through the layers to the prediction. The next slide opens up attention within a single layer.</p>"
     },
     {
-      id:'verification', title:'Reliable feedback supports repeated improvement', duration:105, steps:2, sources:['alphaevolve','r1'],
-      html:`<div class="feedback-loop"><div class="loop-node">Propose</div><span class="loop-arrow">→</span><div class="loop-node">Check</div><span class="loop-arrow">→</span><div class="loop-node">Revise</div></div><p class="reveal" data-reveal="1">Answer keys, tests, and proof checkers can close the loop.</p><div class="reveal" data-reveal="2"><p class="spaced">AlphaEvolve: <span class="blue">49 → 48</span> multiplications</p><p class="caption">A new construction for complex 4 × 4 matrix multiplication, found by LLM-guided search.</p></div>`,
-      notes:`<p>When a system can propose a candidate, check it, and revise it, it can run many useful iterations. A reliable outcome can select successful attempts, become training data, or supply an RL reward. These are related uses of feedback, not identical algorithms.</p><p>AlphaEvolve in 2025 provides a concrete example of improving on a previously known human result: its LLM-driven evolutionary search found a construction for complex 4 by 4 matrix multiplication using 48 scalar multiplications rather than 49. Automatic evaluators made the search useful. This was a whole search system, not one unaided chat response.</p><p>Such results support a precise kind of exceptional performance on a specified task. “Superhuman” needs a reference group and a task definition. Olympiad medals, benchmark percentages, and a new best-known construction describe different comparisons.</p><p>The mechanism suggests why checkable domains have advanced quickly. It does not prove a universal law of progress.</p>`
+      "id": "attention",
+      "title": "Attention",
+      "duration": 90,
+      "scene": "attention",
+      "sources": [
+        "transformer"
+      ],
+      "notes": "<p>At one layer, every available position has a key and a value. The position being updated also makes a query. These are vectors computed from the current representations using learned parameters.</p><p>The query is compared with each key. The scores are normalized to give nonnegative weights that add up to one. The layer then forms a weighted sum of the value vectors. In this illustration, the position containing “key” contributes most strongly when updating “it”. The current position also has its own key and value and can attend to itself.</p><p>A key determines the weight assigned to a position; its value supplies the information being combined. The comparison is a scaled dot product and the normalization is a softmax. Multiple attention heads carry out separate versions of this operation in parallel.</p><p>The weights here were chosen to make the calculation visible. They are not measurements from a model. Attention can capture many kinds of relationship, and an attention map alone does not fully explain an answer.</p><p class=\"cue\">First locate the query. Advance through key comparisons, normalized weights, and the weighted combination of values. Keep the token positions fixed throughout.</p>"
     },
     {
-      id:'reality', title:'What if the answer requires an experiment?', duration:75, steps:2,
-      html:`<div class="feedback-table"><div><h3>Fast feedback</h3><p>Run a test.<br>Check an answer.<br>Try again.</p></div><div><h3>Evidence from the world</h3><p>Run an experiment.<br>Observe an intervention.<br>Wait for an outcome.</p></div></div><p class="reveal spaced" data-reveal="1">Feedback may be delayed, costly, noisy, or incomplete.</p><p class="reveal" data-reveal="2">The consequences for future progress remain uncertain.</p>`,
-      notes:`<p>Many scientific and medical questions cannot be settled by checking the text of an answer. They require measurements, experiments, interventions, or follow-up. Feedback may arrive slowly, cost substantial resources, and leave causal ambiguity.</p><p>This is a property of the task, not a strict division between disciplines. A medical exam question is cheaply scored; an effect on patient outcomes is not. Experimental science also contains checkable calculations, code, and constrained design tasks.</p><p>The strongest examples in this talk concern tasks with usable verification. That does not justify claiming that no model can ever outperform a human on any task outside mathematics or coding. Nor does high performance on scientific questions demonstrate autonomous scientific discovery or improved real-world outcomes.</p><p>Possible futures include better simulators, automated experiments, and more effective human–AI workflows. Whether those feedback systems support equally rapid progress is an open empirical question. This is an inference from the mechanism, not a forecast with an established answer.</p>`
+      "id": "flow",
+      "title": "Attention through the layers",
+      "duration": 105,
+      "scene": "flow",
+      "sources": [
+        "transformer",
+        "cache"
+      ],
+      "notes": "<p>We now follow both routes through the stack. The blue route carries the current token’s representation upwards. At each layer, attention also reads keys and values from the context, shown in rust.</p><p>The keys and values for a layer are computed from the representations entering that layer. Earlier tokens therefore supply different keys and values at different depths. The current token makes its query, and its own key and value, from its representation at the same depth. Attention combines the available values before the layer finishes updating the current representation.</p><p>After the first layer has finished, the updated representation enters the second layer. Its new query can read the second layer’s stored keys and values. The same sequence happens at each depth, until the final representation produces the next-token distribution.</p><p>During generation, the earlier tokens have already been processed. A causal mask prevented them from reading future tokens, so adding the current token does not require us to redo their earlier computations. Only positions at or before the current one are available.</p><p class=\"cue\">Advance one layer at a time. Point first to the rust input, then follow the blue output upwards. Do not describe lateral attention as reading the final output vectors of earlier tokens.</p>"
     },
     {
-      id:'closing', title:'What we know, and what remains open', duration:45, steps:2, className:'closing',
-      html:`<p>Prediction can reward rich knowledge and computation.</p><p class="reveal" data-reveal="1">Reasoning training makes productive computation more likely.</p><p class="reveal" data-reveal="2">How far can this go when checking is difficult?</p>`,
-      notes:`<p>The basic learning objective is simple, but the function that minimizes it can be complex. Attention lets each position read the context, and repeated layers and generated tokens support extended computation.</p><p>Pretraining builds broad capabilities. Demonstrations and preference feedback shape how they are used. Reasoning-focused training and additional inference computation have produced striking results, especially where feedback is useful and repeatable.</p><p>The unresolved question is how far those methods carry us when the world, rather than a cheap checker, must supply the evidence. That is an appropriate place to remain both interested and uncertain.</p><p class="cue">End at 30 minutes. Questions.</p>`
+      "id": "cache",
+      "title": "The KV cache",
+      "duration": 45,
+      "scene": "cache",
+      "sources": [
+        "cache"
+      ],
+      "notes": "<p>Each layer keeps the keys and values already computed for earlier positions. This collection is the KV cache. When we append a token, its query can read those stored values, and each layer adds the new token’s keys and values to its cache.</p><p>Causal attention means that a later token cannot change what an earlier position could see. Its stored keys and values can therefore be reused. This saves the cost of repeatedly processing the entire prefix while generating an answer.</p><p>The cache contains intermediate activations for this context. The learned parameters are stored separately. Extending the context normally increases the cache’s memory use, and long contexts can make attention more expensive even when these previous computations are reused.</p><p class=\"cue\">Show the existing per-layer cache, then the new token’s entries being added. Connect each row to the corresponding layer in the preceding diagram.</p>"
+    },
+    {
+      "id": "pretraining",
+      "title": "Pretraining",
+      "duration": 75,
+      "steps": 1,
+      "sources": [
+        "gpt3"
+      ],
+      "html": "<div class=\"prompt-sheet translation\"><div><span>sea</span><span>→</span><span>mer</span></div><div><span>sun</span><span>→</span><span>soleil</span></div><div><span>house</span><span>→</span><span class=\"answer-slot\"><span class=\"reveal blue\" data-reveal=\"1\">maison</span></span></div></div>",
+      "notes": "<p>Pretraining applies next-token prediction to a large collection of text. That text contains conversations, arguments, code, worked solutions and translations. Learning to continue these different kinds of material can produce capabilities that were not individually programmed into the model.</p><p>GPT-3 demonstrated in 2020 that a pretrained model could perform a variety of tasks when its prompt contained a few examples. Here the first two translations establish the pattern for the third. This is a teaching illustration, rather than a recorded GPT-3 response.</p><p>The examples influence the prediction through the input. They are not a new round of parameter training. A pretrained model can also continue a request in an inconvenient way, for example by producing more questions or imitating an unsuitable kind of text. The next training stages make it easier to use as an assistant.</p><p class=\"cue\">Reveal maison. The source dates the capability milestone to GPT-3 in 2020.</p>"
+    },
+    {
+      "id": "instructions",
+      "title": "Instruction tuning",
+      "duration": 75,
+      "steps": 1,
+      "sources": [
+        "instruct"
+      ],
+      "html": "<div class=\"instruction-example\"><div class=\"instruction-part\"><h3>Prompt</h3><p>Explain why the Moon has phases.</p></div><div class=\"instruction-part reveal\" data-reveal=\"1\"><h3>Example answer</h3><p class=\"blue\">We see different portions of its sunlit half<br>as it orbits Earth.</p></div></div>",
+      "notes": "<p>Instruction tuning uses examples in the form we want the model to produce: a request followed by a suitable response. Someone supplies the response, or selects it from generated candidates, and the model is trained to predict its tokens.</p><p>This uses the same kind of prediction loss that we saw for text. The difference is the training material and which tokens contribute to the loss. In a common setup, the request provides context and the loss is calculated on the response tokens.</p><p>The Moon example illustrates that format. A collection of such examples teaches the model how requests are usually answered, how explanations are written, and when a short response is appropriate. The 2022 InstructGPT work also used human preference feedback, so its reported improvement reflects the combined procedure.</p><p class=\"cue\">Reveal the example answer beneath its prompt. Keep the entire training pair visible.</p>"
+    },
+    {
+      "id": "preferences",
+      "title": "Human preference training",
+      "duration": 60,
+      "steps": 3,
+      "sources": [
+        "instruct"
+      ],
+      "html": "<div class=\"preference-layout\"><div class=\"preference-process\"><div class=\"process-step\"><div class=\"response-pair\"><span>A</span><span>B</span></div><p>Responses</p></div><span class=\"process-arrow reveal\" data-reveal=\"1\">→</span><div class=\"process-step reveal\" data-reveal=\"1\"><div class=\"ranking\">A &gt; B</div><p>Human rankings</p></div><span class=\"process-arrow reveal\" data-reveal=\"2\">→</span><div class=\"process-step reveal\" data-reveal=\"2\"><div class=\"process-box\">Reward model</div></div><span class=\"process-arrow reveal\" data-reveal=\"2\"><small>RL</small>→</span><div class=\"process-step reveal\" data-reveal=\"2\"><div class=\"process-box model-box\">Language<br>model θ</div></div></div><div class=\"preference-result reveal\" data-reveal=\"3\"><p>Raters preferred</p><div class=\"model-comparison\"><span><strong>1.3B</strong> InstructGPT</span><span>to</span><span><strong>175B</strong> GPT-3</span></div></div></div>",
+      "notes": "<p>People compare several responses to the same prompt. The comparisons train a reward model that predicts which response people would prefer. Reinforcement learning then uses its scores to adjust the language model.</p><p>In the InstructGPT study, raters preferred the 1.3-billion-parameter trained assistant to the original 175-billion-parameter GPT-3 on the evaluated prompts. A much smaller network could be more useful for these requests after demonstrations and preference training. This comparison is about judged responses, not a claim that the smaller network was better at every task.</p><p>Preference scores can favor a confident explanation that is wrong. The language model can also find ways to obtain high scores without doing what we intended. Some later methods train directly from preference pairs instead of fitting a separate reward model. Here we are following the original InstructGPT procedure.</p><p class=\"cue\">Reveal the rankings, the reward model and its update route, then the measured preference result. The result belongs to the combined demonstration-and-preference procedure.</p>"
+    },
+    {
+      "id": "reasoning",
+      "title": "Reasoning",
+      "duration": 75,
+      "steps": 3,
+      "sources": [
+        "o1"
+      ],
+      "html": "<div class=\"calculation\"><div><span>17 × 19</span><span></span></div><div class=\"reveal\" data-reveal=\"1\"><span>=</span><span>17 × (20 − 1)</span></div><div class=\"reveal\" data-reveal=\"2\"><span>=</span><span>340 − 17</span></div><div class=\"reveal blue\" data-reveal=\"3\"><span>=</span><span>323</span></div></div>",
+      "notes": "<p>A model can generate intermediate calculations before producing its answer. Each new token involves another pass through the network, and later tokens can read the preceding calculation through attention. A partial result written into the context can therefore be used in a later step.</p><p>The arithmetic here is intentionally simple and is not a transcript from a model. More difficult tasks can benefit from decomposing a problem, trying an approach, noticing a contradiction or checking a result.</p><p>OpenAI reported in 2024 that o1 improved with more reinforcement learning during training and with more computation while answering. Generating more text by itself is not sufficient; the training has to make useful computations more likely. Visible reasoning also need not be a faithful description of every internal computation.</p><p>While answering, the model usually extends its context without changing its parameters. Reinforcement learning changes those parameters beforehand, using the outcomes of many attempts. The next example shows how an outcome can supply that training signal.</p><p class=\"cue\">Reveal one line per advance. Relate each new line to another generation step, with the previous lines available as context.</p>"
+    },
+    {
+      "id": "rl",
+      "title": "Reinforcement learning",
+      "duration": 90,
+      "steps": 3,
+      "sources": [
+        "r1"
+      ],
+      "html": "<div class=\"rl-example\"><p class=\"problem\">Find positive integers with sum 10 and product 21.</p><div class=\"rl-board\"><div class=\"rl-model\">Model<span class=\"parameter-mark\">θ</span></div><div class=\"rl-out-arrow\">→</div><table class=\"academic-table reward-table\"><thead><tr><th>Candidate</th><th class=\"reveal\" data-reveal=\"1\">Sum</th><th class=\"reveal\" data-reveal=\"1\">Product</th><th class=\"reveal\" data-reveal=\"2\">Reward</th></tr></thead><tbody><tr><td>2, 8</td><td class=\"reveal\" data-reveal=\"1\">10</td><td class=\"reveal\" data-reveal=\"1\">16</td><td class=\"reveal\" data-reveal=\"2\">0</td></tr><tr><td>3, 7</td><td class=\"reveal\" data-reveal=\"1\">10</td><td class=\"reveal blue\" data-reveal=\"1\">21</td><td class=\"reveal blue\" data-reveal=\"2\">1</td></tr><tr><td>4, 6</td><td class=\"reveal\" data-reveal=\"1\">10</td><td class=\"reveal\" data-reveal=\"1\">24</td><td class=\"reveal\" data-reveal=\"2\">0</td></tr></tbody></table><div class=\"rl-return reveal\" data-reveal=\"3\"><svg viewBox=\"0 0 1010 70\" aria-hidden=\"true\"><path d=\"M950 4 V48 H92 V4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/><path d=\"M84 15 L92 3 L100 15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/></svg><span>Parameter update</span></div></div></div>",
+      "notes": "<p>During training, the model produces several attempts. In this example a short program can check the sum and product and assign a reward of one when both constraints hold. The displayed candidates are just final answers; on a difficult problem, each would follow a longer attempted solution.</p><p>Reinforcement learning uses the rewards to adjust the probabilities of those generated sequences. Successful attempts receive a different learning signal from unsuccessful ones. Across many problems, the model can learn computations that tend to lead to better outcomes.</p><p>The checker does not have to be differentiable. A policy-gradient-style calculation uses the probabilities of the model’s generated tokens and the reward it receives; it does not differentiate through the checker.</p><p>A reward for the final answer does not specify which intermediate steps to use. It may also reward lucky guesses or exploit an incomplete checker. The quality and coverage of the feedback matter. In verifiable tasks, that feedback can be obtained at a scale that would be difficult with human-written demonstrations alone.</p><p class=\"cue\">Reveal the arithmetic checks, then rewards, then the returning parameter-update arrow. The arrow marks training; ordinary generation does not perform this update.</p>"
+    },
+    {
+      "id": "aime",
+      "title": "AIME I 2024, Problem 1",
+      "duration": 75,
+      "steps": 1,
+      "sources": [
+        "aime"
+      ],
+      "html": "<div class=\"task-table\"><p class=\"problem\">A 9 km walk followed by a café stop of fixed duration.</p><table class=\"academic-table\"><thead><tr><th>Walking speed</th><th>Total time</th></tr></thead><tbody><tr><td><i>s</i> km/h</td><td>4 hours</td></tr><tr><td><i>s</i> + 2 km/h</td><td>2 hours 24 minutes</td></tr><tr class=\"target-row\"><td><i>s</i> + ½ km/h</td><td><span data-until=\"1\">?</span><span class=\"reveal blue\" data-reveal=\"1\">204 minutes</span></td></tr></tbody></table></div>",
+      "notes": "<p>Before looking at an accuracy score, consider one of the questions. The walk is nine kilometres each time, and the café stop always lasts the same amount of time. At speed s the total is four hours. At s plus two kilometres per hour, it is two hours and 24 minutes. We need the total at s plus one half.</p><p>Let the stop last T hours. The equations are 9/s + T = 4 and 9/(s + 2) + T = 2.4. Solving gives s = 2.5 and T = 0.4. The requested speed is therefore 3 kilometres per hour, giving three hours of walking and 24 minutes at the café: 204 minutes.</p><p>This is the opening problem of AIME I 2024. It is chosen to be accessible; later questions are harder. The answer key makes scoring the final integer inexpensive even when finding it takes substantial work.</p><p class=\"cue\">Leave a moment to read the table, then reveal the answer. The algebra can be explained aloud without adding another block of slide text.</p>"
+    },
+    {
+      "id": "rl-result",
+      "title": "DeepSeek-R1-Zero",
+      "duration": 75,
+      "steps": 1,
+      "sources": [
+        "r1"
+      ],
+      "html": "<div class=\"result-chart\"><div class=\"chart-head\"><span>AIME 2024</span><span>Correct responses (%)</span></div><div class=\"chart-bars\"><span class=\"chart-label\">Before RL</span><div class=\"chart-track\"><div class=\"chart-bar\" style=\"width:15.6%\"><b>15.6</b></div></div><span class=\"chart-label reveal\" data-reveal=\"1\">After RL</span><div class=\"chart-track reveal\" data-reveal=\"1\"><div class=\"chart-bar improved\" style=\"width:71%\"><b>71.0</b></div></div></div><div class=\"chart-axis\"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div></div>",
+      "notes": "<p>DeepSeek followed one pretrained model through reinforcement learning and reported that its AIME 2024 accuracy rose from 15.6 to 71 percent. This result was published in January 2025.</p><p>The authors estimated single-attempt accuracy by averaging sixteen sampled responses per question. They were not selecting the best answer from each group of sixteen. The distinction matters when comparing reported scores.</p><p>R1-Zero began with pretraining and skipped an initial supervised instruction-tuning stage. Its rewards included correctness and formatting. During training, its responses became longer and included more checking, although readability remained a problem. The production R1 model used additional supervised and reinforcement-learning stages.</p><p>This result ties the improvement to an RL training run more directly than a comparison between unrelated model releases would. It does not separately control all the effects of increased computation while answering, and it does not establish that every domain will improve by the same amount.</p><p class=\"cue\">Reveal the second bar. Both bars share a scale from zero to one hundred percent.</p>"
+    },
+    {
+      "id": "code",
+      "title": "Program tests",
+      "duration": 60,
+      "steps": 2,
+      "sources": [
+        "humaneval",
+        "swe"
+      ],
+      "html": "<div class=\"task-table\"><p class=\"problem\">Return the smallest missing positive integer.</p><table class=\"academic-table code-table\"><thead><tr><th>Input</th><th>Expected output</th></tr></thead><tbody><tr><td>[3, 4, −1, 1]</td><td class=\"reveal blue\" data-reveal=\"1\">2</td></tr><tr><td>[1, 2, 3]</td><td class=\"reveal blue\" data-reveal=\"1\">4</td></tr><tr><td>[]</td><td class=\"reveal blue\" data-reveal=\"2\">1</td></tr></tbody></table></div>",
+      "notes": "<p>A coding task can specify a function and then execute the generated program on test inputs. For the first input here, one is present and two is missing, so the answer is two. For the next input, the answer is four. The empty list checks whether the function handles an edge case; its answer is one.</p><p>Additional hidden tests can reveal errors that the examples in the prompt miss. The same mechanism can evaluate programs during training or guide a search over generated candidates. Larger tasks can ask the model to modify an existing repository while preserving its other behavior.</p><p>A test suite can still miss bugs or reject a valid solution. Benchmark examples may also have appeared in training data. OpenAI’s February 2026 analysis of SWE-bench Verified documents these problems. Passing tests is therefore a result about those tests, not a guarantee of correctness in every setting.</p><p>This small exercise is for teaching. It is not a measured model result or a question taken from HumanEval.</p><p class=\"cue\">Reveal the first two expected outputs, then the empty-input case.</p>"
+    },
+    {
+      "id": "imo-task",
+      "title": "IMO 2025, Problem 4",
+      "duration": 90,
+      "steps": 2,
+      "sources": [
+        "imo"
+      ],
+      "html": "<div class=\"olympiad-example\"><p class=\"problem\">Repeatedly replace a positive integer by the sum of its three largest proper divisors. Stop if it has fewer than three.<br>Determine, with proof, which starting values give an infinite sequence.</p><div class=\"divisor-sequences\"><div class=\"reveal\" data-reveal=\"1\"><span>18</span><span>→ 9 + 6 + 3 = 18 → 18 → …</span></div><div class=\"reveal\" data-reveal=\"2\"><span>12</span><span>→ 6 + 4 + 3 = 13 → stop</span></div></div></div>",
+      "notes": "<p>A proper divisor is a positive divisor smaller than the number. Eighteen has largest proper divisors nine, six and three. Their sum is eighteen, so this sequence continues forever. Twelve gives thirteen; thirteen is prime and has only one proper divisor, so that sequence stops.</p><p>Calculating a few cases is much easier than answering the question. It asks for every possible starting value, and a proof that the classification is complete. A successful answer must establish both that the proposed values work and that every other value eventually fails.</p><p>At the IMO, expert graders assess the proof. This takes more work than comparing a final integer with an answer key. Formal proof systems can automate verification when a proof is expressed in their language, but these particular solutions were written in natural language and graded by people.</p><p class=\"cue\">Show the repeating example, then the one that stops. The statement is paraphrased; the full problem is linked below.</p>"
+    },
+    {
+      "id": "imo-result",
+      "title": "Gemini Deep Think at IMO 2025",
+      "duration": 60,
+      "steps": 0,
+      "sources": [
+        "gemini",
+        "imoresults"
+      ],
+      "html": "<div class=\"imo-score\"><div class=\"score-fraction\"><strong>35</strong><span>/ 42</span></div><table class=\"academic-table\"><tbody><tr><th>Problems solved</th><td>5 / 6</td></tr><tr><th>Award standard</th><td>Gold medal</td></tr></tbody></table></div>",
+      "notes": "<p>In July 2025, an advanced Gemini Deep Think system solved five of the six IMO problems, including the divisor problem. IMO coordinators graded its natural-language proofs and awarded 35 out of 42 points, meeting the gold-medal standard. Five human contestants scored 42.</p><p>The evaluated system used additional reinforcement learning, mathematical solution data and parallel exploration of reasoning paths. This result cannot isolate the contribution of RL alone. It also describes a particular evaluation system rather than the reliability of every response from a general chat product.</p><p>The comparison is already demanding: a few years after general-purpose text models began performing tasks from examples in a prompt, a system could produce proofs that met this competition standard. To examine performance beyond a previous human result, we can look at a more narrowly defined algorithmic task.</p>"
+    },
+    {
+      "id": "verification",
+      "title": "AlphaEvolve",
+      "duration": 105,
+      "steps": 2,
+      "sources": [
+        "alphaevolve",
+        "r1"
+      ],
+      "html": "<div class=\"alpha-example\"><p class=\"problem\">Complex 4 × 4 matrix multiplication</p><div class=\"matrix-product\" aria-label=\"Four by four matrix A times four by four matrix B equals four by four matrix C\"><span class=\"matrix-grid\" aria-hidden=\"true\">a₁₁　⋯　a₁₄<br>⋮　　　　⋮<br>a₄₁　⋯　a₄₄</span><span>×</span><span class=\"matrix-grid\" aria-hidden=\"true\">b₁₁　⋯　b₁₄<br>⋮　　　　⋮<br>b₄₁　⋯　b₄₄</span><span>=</span><span class=\"matrix-grid\" aria-hidden=\"true\">c₁₁　⋯　c₁₄<br>⋮　　　　⋮<br>c₄₁　⋯　c₄₄</span></div><table class=\"academic-table compact\"><thead><tr><th>Construction</th><th>Scalar multiplications</th></tr></thead><tbody><tr class=\"reveal\" data-reveal=\"1\"><td>Previous best known</td><td>49</td></tr><tr class=\"reveal\" data-reveal=\"2\"><td>AlphaEvolve</td><td class=\"blue\">48</td></tr></tbody></table></div>",
+      "notes": "<p>AlphaEvolve combined an LLM with evolutionary search and automatic evaluators. In 2025 it found a construction for multiplying complex four-by-four matrices using 48 scalar multiplications, improving on the previous best-known construction using 49.</p><p>The usual entry-by-entry method uses 64 scalar multiplications. Faster constructions reuse combinations of entries. The task is to find such a construction and check that it computes the correct product for arbitrary matrices. Saving one multiplication compared with the previous record is a precise improvement on known human work.</p><p>Automatic evaluation lets the system reject incorrect candidates and continue searching from useful ones. This was a result from the complete search system, not an unaided chat response. Feedback can also supply RL rewards or help collect training examples, although those are different uses of evaluation.</p><p>This is the kind of setting where a system can attempt many candidates and receive informative feedback repeatedly. The comparison becomes harder when an answer cannot be assessed without collecting new evidence from the world.</p><p class=\"cue\">Reveal the previous record, then 48. Discuss what the evaluator makes possible, rather than treating the count as a general measure of intelligence.</p>"
+    },
+    {
+      "id": "reality",
+      "title": "Experiments and outcomes",
+      "duration": 75,
+      "steps": 2,
+      "html": "<div class=\"evaluation-comparison\"><table class=\"academic-table\"><thead><tr><th>Task</th><th>Evaluation</th></tr></thead><tbody><tr><td>Generated program</td><td>Run tests</td></tr><tr><td>Mathematical solution</td><td>Check the answer or proof</td></tr><tr class=\"reveal\" data-reveal=\"1\"><td>Experimental prediction</td><td>Make measurements</td></tr><tr class=\"reveal\" data-reveal=\"2\"><td>Proposed treatment</td><td>Measure patient outcomes</td></tr></tbody></table></div>",
+      "notes": "<p>For many scientific questions, evaluating an answer requires new measurements. A proposed treatment may require an intervention and follow-up before we can assess its effects. Such evaluations can be expensive, slow and noisy, and the results may still leave causal ambiguity.</p><p>The distinction applies to tasks within a field. A medical exam question can be scored from an answer key, while a claim about patient outcomes requires different evidence. Experimental science also contains calculations, software and constrained design tasks that can be checked efficiently.</p><p>The clearest examples we have examined of matching or exceeding very strong human performance involve mathematical and computational tasks with usable verification. They do not establish comparable performance in autonomous experimental science or improved clinical outcomes. It would also be too broad to claim that models cannot outperform people on any task outside mathematics and coding.</p><p>Better simulations, automated experiments and collaboration with researchers could provide more feedback. We do not know whether these will support the same rate of improvement, or how much progress will be limited by the time and cost of obtaining evidence.</p><p class=\"cue\">Reveal measurement and patient-outcome rows separately. Discuss the delay and cost of each evaluation, rather than drawing a boundary between whole disciplines.</p>"
+    },
+    {
+      "id": "closing",
+      "title": "Discussion",
+      "duration": 45,
+      "steps": 0,
+      "className": "discussion-slide",
+      "html": "<p class=\"discussion-question\">How quickly can models improve when evaluating an answer requires an experiment?</p>",
+      "notes": "<p>We started with a general learning procedure: measure a loss and use gradients to adjust a network. Next-token prediction applies that procedure to a broad range of written material. Attention lets the network use its context, and generating intermediate tokens supplies additional computation.</p><p>Demonstrations, preference feedback and reasoning training change how the resulting model responds. We now have strong results on several tasks where candidate answers can be evaluated repeatedly. Applying similar methods to experimental questions depends in part on how much reliable feedback we can obtain and how quickly.</p><p class=\"cue\">End at 30 minutes. Questions.</p>"
     }
   ]
 };

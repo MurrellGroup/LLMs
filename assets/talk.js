@@ -17,7 +17,7 @@
 
   $('stage').innerHTML = slides.map((s,i) => {
     const title = s.className === 'title-slide' ? '' : `<h2>${escape(s.title)}</h2>`;
-    const body = s.scene ? `<div class="diagram" data-scene="${escape(s.scene)}"></div><p class="caption">${escape(s.caption || '')}</p>` : s.html;
+    const body = s.scene ? `<div class="diagram" data-scene="${escape(s.scene)}"></div>` : s.html;
     const citations = (s.sources || []).map(key => `<a href="${escape(sources[key].url)}" target="_blank" rel="noopener noreferrer">${escape(sources[key].label)}</a>`).join(' · ');
     return `<section class="slide ${s.className || ''} ${s.scene ? 'diagram-slide' : ''}" id="${escape(s.id)}" data-index="${i}" role="group" aria-roledescription="slide" aria-label="${i+1} of ${slides.length}: ${escape(s.title)}" aria-hidden="true" inert>${title}<div class="body">${body}</div><p class="citation">${citations}</p></section>`;
   }).join('');
@@ -38,7 +38,7 @@
     el.querySelectorAll('[data-width-step]').forEach(node => {
       node.style.width = build >= Number(node.dataset.widthStep) ? node.dataset.widthAfter : node.dataset.widthBefore;
     });
-    if (slide.scene) el.querySelector('.diagram').innerHTML = diagrams.render(slide.scene, build);
+    if (slide.scene) el.querySelector('.diagram').innerHTML = diagrams.render(slide.scene, build, {motion: !printing && !handout});
   }
 
   function resize() {

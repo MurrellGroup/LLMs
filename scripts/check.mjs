@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 import vm from 'node:vm';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const context={window:{}};
-for (const file of ['assets/content.js','assets/diagrams.js']) vm.runInNewContext(readFileSync(root+file,'utf8'),context,{filename:file});
+for (const file of ['assets/content.js','assets/foundation-scenes.js','assets/transformer-scenes.js','assets/diagrams.js']) vm.runInNewContext(readFileSync(root+file,'utf8'),context,{filename:file});
 const {slides,sources}=context.window.LLMTalk;
 const diagrams=context.window.LLMDiagrams;
 assert.equal(slides.reduce((sum,s)=>sum+s.duration,0),1800,'Planned timing must total 30 minutes.');
