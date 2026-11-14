@@ -204,7 +204,7 @@ Presenter cue: Build the path from the observed token through the layers to the 
 
 Animation steps:
 
-1. The observed token it and its position form an input representation. Three layers are shown above it.
+1. The observed token “its” and its position form an input representation. Three layers are shown above it.
 2. The representation enters layer one: attention, followed by a transformation at this position.
 3. The updated representation enters layer two.
 4. Layer three produces the final representation.
@@ -218,7 +218,7 @@ Sources: [Vaswani et al., 2017](https://arxiv.org/html/1706.03762v7).
 
 At one layer, every available position has a key and a value. The position being updated also makes a query. These are vectors computed from the current representations using learned parameters.
 
-The query is compared with each key. The scores are normalized to give nonnegative weights that add up to one. The layer then forms a weighted sum of the value vectors. In this illustration, the position containing “key” contributes most strongly when updating “it”. The current position also has its own key and value and can attend to itself.
+The query is compared with each key. The scores are normalized to give nonnegative weights that add up to one. The layer then forms a weighted sum of the value vectors. In this illustration, the position containing “cat” contributes most strongly when updating “its”. The current position also has its own key and value and can attend to itself.
 
 A key determines the weight assigned to a position; its value supplies the information being combined. The comparison is a scaled dot product and the normalization is a softmax. Multiple attention heads carry out separate versions of this operation in parallel.
 
@@ -228,10 +228,10 @@ Presenter cue: First locate the query. Advance through key comparisons, normaliz
 
 Animation steps:
 
-1. A query is made from the current token it. Every available token has a key and a value.
+1. A query is made from the current token “its”. Every available token has a key and a value.
 2. The same query is compared with each key, including the key of the current position.
 3. The comparison scores are normalized into weights summing to one: 0.10, 0.60, 0.20 and 0.10.
-4. The values are multiplied by those weights and summed. The key token contributes the largest share in this illustrative head.
+4. The values are multiplied by those weights and summed. The token “cat” contributes the largest share in this illustrative head.
 
 Sources: [Vaswani et al., 2017](https://arxiv.org/html/1706.03762v7).
 
@@ -251,7 +251,7 @@ Presenter cue: Advance one layer at a time. Point first to the rust input, then 
 
 Animation steps:
 
-1. Earlier tokens have a separate cached key and value at every layer. The current observed token it begins at the bottom of the stack.
+1. Earlier tokens have a separate cached key and value at every layer. The current observed token “its” begins at the bottom of the stack.
 2. Layer one reads the cached keys and values from earlier positions and its own key and value, then updates the current representation.
 3. The representation moves upwards into layer two, which reads its own row of cached keys and values.
 4. Layer three reads its row of cached keys and values. Keys and values are made from the input to their corresponding layer; they do not propagate vertically between layers.
@@ -273,7 +273,7 @@ Presenter cue: Show the existing per-layer cache, then the new token’s entries
 
 Animation steps:
 
-1. The three earlier tokens have cached keys and values at all three layers. The current token it has an empty column.
+1. The three earlier tokens have cached keys and values at all three layers. The current token “its” has an empty column.
 2. The current token adds its layer-one key and value.
 3. Its layer-two key and value are added.
 4. Its layer-three key and value complete the new cache column. Earlier columns have been reused.

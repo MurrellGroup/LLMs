@@ -126,7 +126,7 @@
       body += text(810,287,'Gradient',{size:25,anchor:'start'});
       body += text(1075,287,fmt(gradient),{size:29,fill:C.rust,anchor:'end'});
       body += text(940,371,'θ ← θ − η × gradient',{size:25});
-      body += text(940,417,'η = 0.2',{size:25,fill:C.muted});
+      body += text(940,417,'Learning rate η = 0.2',{size:25,fill:C.muted});
       const from=step===1 ? 3 : previous;
       const to=step===1 ? 3.8 : theta;
       body += arrow('optimization',`M ${px(from)} 463 H ${px(to)}`,'blue',true,3);
